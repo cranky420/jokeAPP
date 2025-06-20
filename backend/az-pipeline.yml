@@ -1,0 +1,29 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  name: Default
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '18.x'
+    displayName: 'Install Node.js'
+
+  - script: |
+      cd backend
+      npm install
+    displayName: 'Install dependencies'
+
+  - script: |
+      echo "Building backend..."
+    displayName: 'Dummy build'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: 'backend'
+      ArtifactName: 'backend-drop'
+      publishLocation: 'Container'
+
