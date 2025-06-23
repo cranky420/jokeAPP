@@ -5,7 +5,7 @@ function App() {
   const [joke, setJoke] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/joke")
+    fetch("/api/joke/")
       .then((res) => res.json())
       .then((data) => setJoke(data.joke))
       .catch((err) => setJoke("Failed to fetch joke 😞"));
