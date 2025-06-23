@@ -8,6 +8,7 @@ pool:
   name: Default
 
 steps:
+# CI
   - task: NodeTool@0
     inputs:
       versionSpec: '18.x'
@@ -28,3 +29,9 @@ steps:
       ArtifactName: 'backend-drop'
       publishLocation: 'Container'
 
+# CD
+  - script: |
+      echo "Deploying backend to Minikube..."
+      kubectl apply -f backend/k8s/deployment.yaml
+      kubectl apply -f backend/k8s/service.yaml
+    displayName: 'Deploy backend to Minikube'

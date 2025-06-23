@@ -8,6 +8,7 @@ pool:
   name: Default
 
 steps:
+# CI
   - task: NodeTool@0
     inputs:
       versionSpec: '18.x'
@@ -24,3 +25,11 @@ steps:
       PathtoPublish: 'frontend/build'
       ArtifactName: 'frontend-drop'
       publishLocation: 'Container'
+
+# CD
+  - script: |
+      echo "Deploying frontend to Minikube..."
+      kubectl apply -f frontend/k8s/deployment.yaml
+      kubectl apply -f frontend/k8s/service.yaml
+      kubectl apply -f k8s/ingress.yaml
+    displayName: 'Deploy frontend and ingress to Minikube'
