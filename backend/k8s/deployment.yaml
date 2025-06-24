@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: joke-backend
-          image: joke-backend:latest
-          imagePullPolicy: Never
+          # image: joke-backend:latest
+          image: bijayrajsinghdeo/joke-backend:prod
+          imagePullPolicy: Always
           ports:
-            - containerPort: 3000
+            - containerPort: 3001
