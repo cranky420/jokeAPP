@@ -25,14 +25,17 @@ steps:
 # Docker Build and Push
 - script: |
     echo "Logging into Docker Hub..."
-    echo $(DOCKER_PASSWORD) | docker login -u $(DOCKER_USERNAME) --password-stdin
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
     echo "Building image..."
-    docker build -t $(DOCKER_USERNAME)/$(imageName):$(Build.SourceBranchName) ./backend
+    docker build -t $DOCKER_USERNAME/joke-backend:prod .
 
     echo "Pushing image..."
-    docker push $(DOCKER_USERNAME)/$(imageName):$(Build.SourceBranchName)
+    docker push $DOCKER_USERNAME/joke-backend:prod
   displayName: 'Build and Push Docker Image'
+  env:
+    DOCKER_USERNAME: $(DOCKER_USERNAME)
+    DOCKER_PASSWORD: $(DOCKER_PASSWORD)
 
 # CD
 - script: |
