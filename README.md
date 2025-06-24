@@ -202,3 +202,8 @@ steps:
 - Push images to DockerHub and pull in Kubernetes
 - Integrate Helm for templating
 
+<<<<<<< HEAD
+=======
+---
+
+>>>>>>> main
