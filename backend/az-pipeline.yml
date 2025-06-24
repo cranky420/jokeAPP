@@ -2,28 +2,39 @@ trigger:
   branches:
     include:
       - main
+      - prod
 
 pool:
   name: Default
 
+variables:
+  imageName: 'joke-backend'
+
 steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '18.x'
-    displayName: 'Install Node.js'
+# CI
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+  displayName: 'Install Node.js'
 
-  - script: |
-      cd backend
-      npm install
-    displayName: 'Install dependencies'
+- script: |
+    cd backend
+    npm install
+  displayName: 'Install dependencies'
 
-  - script: |
-      echo "Building backend..."
-    displayName: 'Dummy build'
+# Docker Build and Push
+- script: |
+    echo "Building image..."
+    docker build -t bijayrajsinghdeo/joke-backend:prod ./backend
 
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathtoPublish: 'backend'
-      ArtifactName: 'backend-drop'
-      publishLocation: 'Container'
+    echo "Pushing image..."
+    docker push bijayrajsinghdeo/joke-backend:prod
+  displayName: 'Build and Push Docker Image'
 
+# CD
+- script: |
+    echo "Deploying backend to Minikube..."
+    kubectl config use-context minikube
+    kubectl apply -f backend/k8s/deployment.yaml
+    kubectl apply -f backend/k8s/service.yaml
+  displayName: 'Deploy backend to Minikube'
