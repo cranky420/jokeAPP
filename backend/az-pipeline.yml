@@ -24,18 +24,12 @@ steps:
 
 # Docker Build and Push
 - script: |
-    echo "Logging into Docker Hub..."
-    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-
     echo "Building image..."
-    docker build -t $DOCKER_USERNAME/joke-backend:prod .
+    docker build -t bijayrajsinghdeo/joke-backend:prod ./backend
 
     echo "Pushing image..."
-    docker push $DOCKER_USERNAME/joke-backend:prod
+    docker push bijayrajsinghdeo/joke-backend:prod
   displayName: 'Build and Push Docker Image'
-  env:
-    DOCKER_USERNAME: $(DOCKER_USERNAME)
-    DOCKER_PASSWORD: $(DOCKER_PASSWORD)
 
 # CD
 - script: |
