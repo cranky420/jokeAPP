@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: joke-frontend
-          image: joke-frontend:latest
-          imagePullPolicy: IfNotPresent
+          image: bijayrajsinghdeo/joke-frontend:prod
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
